@@ -377,25 +377,35 @@
     </section>
 
     <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const dropdown = document.querySelector('.dropdown');
-    const button = dropdown.querySelector('[role="button"]');
+    document.addEventListener('DOMContentLoaded', () => {
+        const dropdown = document.querySelector('.navbar-start .dropdown');
+        const button = dropdown.querySelector('[role="button"]');
+        const links = dropdown.querySelectorAll('.dropdown-content a');
 
-    // Menangani klik pada tombol menu (buka / tutup jika di-klik ulang)
-    button.addEventListener('click', (e) => {
-      if (document.activeElement === button) {
-        // Jika sedang fokus (terbuka), hilangkan fokus untuk menutup
-        setTimeout(() => button.blur(), 0);
-      }
-    });
+        // Buka dan tutup dropdown
+        button.addEventListener('click', (e) => {
+            e.stopPropagation();
 
-    // Menangani klik di luar menu untuk menutup
-    document.addEventListener('click', (e) => {
-      if (!dropdown.contains(e.target)) {
-        button.blur();
-      }
+            dropdown.classList.toggle('dropdown-open');
+            button.blur();
+        });
+
+        // Tutup ketika menu dipilih
+        links.forEach(link => {
+            link.addEventListener('click', () => {
+                dropdown.classList.remove('dropdown-open');
+                document.activeElement.blur();
+            });
+        });
+
+        // Tutup ketika klik di luar dropdown
+        document.addEventListener('click', (e) => {
+            if (!dropdown.contains(e.target)) {
+                dropdown.classList.remove('dropdown-open');
+                button.blur();
+            }
+        });
     });
-  });
 </script>
 </body>
 

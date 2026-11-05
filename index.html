@@ -375,6 +375,28 @@
             </aside>
         </footer>
     </section>
+
+    <script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const dropdown = document.querySelector('.dropdown');
+    const button = dropdown.querySelector('[role="button"]');
+
+    // Menangani klik pada tombol menu (buka / tutup jika di-klik ulang)
+    button.addEventListener('click', (e) => {
+      if (document.activeElement === button) {
+        // Jika sedang fokus (terbuka), hilangkan fokus untuk menutup
+        setTimeout(() => button.blur(), 0);
+      }
+    });
+
+    // Menangani klik di luar menu untuk menutup
+    document.addEventListener('click', (e) => {
+      if (!dropdown.contains(e.target)) {
+        button.blur();
+      }
+    });
+  });
+</script>
 </body>
 
 </html>
